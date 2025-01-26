@@ -3,10 +3,11 @@ module TicTacToe
   LINES = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
   
   class Player
-    def initialize(marker) 
+    def initialize(name, marker) 
       @marker = marker
+      @name = name
     end
-    attr_reader :marker
+    attr_reader :marker, :name
 
     def select_position!
       print "Select your #{marker} position (1-9): "
@@ -22,7 +23,7 @@ module TicTacToe
       @current_player_id = 0
       @players = [player_1, player_2]
     end
-    attr_reader :board
+    attr_reader :board, :current_player_id
 
     def play_game
       loop do
@@ -31,11 +32,13 @@ module TicTacToe
 
         # game checks if there is a victory 
         if player_won?(current_player)
-          puts "#{current_player} wins!"
+          puts "#{current_player.name} wins!"
+          print_board
           return 
         # check if the board is full 
         elsif board_full? 
           puts "It's a draw!"
+          print_board
           return
         end
         # if no victory or draw then switch player turns 
@@ -47,7 +50,7 @@ module TicTacToe
 
     def place_marker(player) 
       position = player.select_position!
-      puts "#{player} chooses position #{position}"
+      puts "#{player.name} chooses position #{position}"
       @board[position] = player.marker
     end
 
