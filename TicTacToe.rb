@@ -20,6 +20,7 @@ module TicTacToe
       @board = Array.new(10, "-")
 
       @current_player_id = 0
+      @players = [player_1, player_2]
     end
     attr_reader :board
 
@@ -37,6 +38,10 @@ module TicTacToe
           puts "It's a draw!"
           return
         end
+        # if no victory or draw then switch player turns 
+        switch_players!
+        # and finally print the board after the move 
+        print_board
       end
     end
 
@@ -54,6 +59,22 @@ module TicTacToe
 
     def board_full?
       @board.none? { |element| element == "-"}
+    end
+
+    def other_player_id
+      1 - @current_player_id
+    end
+
+    def current_player
+      @players[@current_player_id]
+    end
+
+    def other_player
+      @players[other_player_id]
+    end
+
+    def switch_players!
+      @current_player_id = other_player_id
     end
 
     def print_board
