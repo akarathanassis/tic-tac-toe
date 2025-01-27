@@ -49,9 +49,27 @@ module TicTacToe
     end
 
     def place_marker(player) 
-      position = player.select_position!
-      puts "#{player.name} chooses position #{position}"
-      @board[position] = player.marker
+
+      loop do 
+        position = player.select_position!
+
+        if valid_position(position) 
+          puts "#{player.name} chooses position #{position}"
+          @board[position] = player.marker
+          break
+        else 
+          puts "Not a valid position, enter another!"
+        end
+      end
+    end
+
+    def valid_position(position) 
+      if @board[position] == "-"
+        return true 
+      else 
+        return false
+      end
+
     end
 
     def player_won?(player)
